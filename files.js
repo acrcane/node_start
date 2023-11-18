@@ -3,6 +3,8 @@ const fs = require('fs').promises;
 const dataValidate = require('./helpers/dataValidate')
 const checkExtention = require('./helpers/checkExtention')
 
+const folderPas = path.join(__dirname, 'files')
+
 const createFile = async (fileName, content) => {
     const file = {fileName, content}
     const isValid = dataValidate(file);
@@ -24,4 +26,24 @@ const createFile = async (fileName, content) => {
     }
 }
 
-module.exports = { createFile }
+
+const getFiles = async () => {
+    try{
+         const files =  await fs.readdir(folderPas)
+
+         if (files.length == 0){
+            console.log('folder is empty');
+            return
+         }
+         files.forEach((file) => {
+            console.log(file);
+         });
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+
+module.exports = { createFile, getFiles }
